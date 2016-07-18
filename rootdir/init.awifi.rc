@@ -105,10 +105,6 @@ on post-fs-data
     # Create directory for TZ Apps
     mkdir /data/misc/qsee 0770 system system
 
-    # Workaround for conn_init not copying the updated firmware
-    rm /data/misc/wifi/WCNSS_qcom_cfg.ini
-    rm /data/misc/wifi/WCNSS_qcom_wlan_nv.bin
-
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
     chown system system /persist
@@ -182,7 +178,7 @@ on property:init.svc.hwaddrs=stopped
     chmod 644 /data/misc/bluetooth/bdaddr
     chown bluetooth bluetooth /data/misc/bluetooth/bdaddr
 
-service hciattach /system/bin/sh /system/etc/init.awifi.bt.sh
+service hciattach /system/bin/init.awifi.bt.sh
     class late_start
     user bluetooth
     group qcom_oncrpc bluetooth net_bt_admin system
@@ -293,7 +289,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     user camera
     group camera system inet input
 
-service conn_init /system/bin/conn_init
+service wcnss_init /system/bin/init.awifi.wifi.sh
     class late_start
     user system
     group system wifi
