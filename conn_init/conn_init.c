@@ -16,7 +16,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <fcntl.h>
 
 extern int wfc_util_qcom_check_config(unsigned char *nv_mac_addr);
 extern void wfc_util_atoh(char *pAsciiString, int szAsciiString, unsigned char *pHexaBuff, int szHexaBuff);
@@ -30,7 +29,6 @@ static int wifi_check_qcom_cfg_files()
 
     // Read MAC String
     FILE *fp = NULL;
-    int n = 0;
     fp = fopen("/data/misc/wifi/macaddr", "r");
     if ( fp == NULL )
     {
@@ -39,11 +37,13 @@ static int wifi_check_qcom_cfg_files()
     }
     else
     {
-        n = fread(macAddress, 12, 1, fp);
+        int n = fread(macAddress, 12, 1, fp);
         fclose(fp);
-        if (n == 0) {
+        if (n != 1) {
             // Buffer may be partially written. Reset.
             memset(macAddress, 0, sizeof(macAddress));
+            wfc_util_qcom_check_config((unsigned char *)macAddress);
+            return 0;
         }
 
         // Write MAC String
@@ -55,12 +55,7 @@ static int wifi_check_qcom_cfg_files()
 
 int main(void)
 {
-    int fd;
     wifi_check_qcom_cfg_files();
-
-    fd = open("/dev/wcnss_wlan",O_WRONLY);
-    write(fd,"1\n",2);
-    close(fd);
 
     return 0;
 }

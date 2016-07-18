@@ -39,11 +39,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml
 
 # Bluetooth
-PRODUCT_PACKAGES += \
-    hwaddrs
-
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/init.awifi.bt.sh:system/etc/init.awifi.bt.sh
+    $(LOCAL_PATH)/configs/init.awifi.bt.sh:system/bin/init.awifi.bt.sh
 
 # CABL
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -117,6 +114,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
+# Hwaddrs
+PRODUCT_PACKAGES += \
+    hwaddrs
+
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8960
@@ -169,6 +170,9 @@ PRODUCT_PACKAGES += \
     hostapd \
     wpa_supplicant \
     wpa_supplicant.conf
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/init.awifi.wifi.sh:system/bin/init.awifi.wifi.sh
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
