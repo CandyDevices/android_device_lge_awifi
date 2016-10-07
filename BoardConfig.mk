@@ -27,9 +27,6 @@ TARGET_OTA_ASSERT_DEVICE := awifi,v500
 # Audio
 BOARD_USES_ALSA_AUDIO:= true
 
-# Bionic
-MALLOC_IMPL := dlmalloc
-
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := AWIFI
 TARGET_BOOTLOADER_NAME := awifi
@@ -48,9 +45,8 @@ COMMON_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.awifi
-BOARD_HEALTHD_CUSTOM_CHARGER_RES := device/lge/awifi/charger/images
-COMMON_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"androidboot.mode"' -DBOARD_CHARGING_CMDLINE_VALUE='"chargerlogo"'
+BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
+BOARD_CHARGING_CMDLINE_VALUE := "chargerlogo"
 
 # Enable dex-preoptimization to speed up first boot sequence
 ifeq ($(HOST_OS),linux)
@@ -58,9 +54,6 @@ ifeq ($(HOST_OS),linux)
     WITH_DEXPREOPT := true
   endif
 endif
-
-# Fonts
-EXTENDED_FONT_FOOTPRINT := true
 
 # Graphics
 USE_OPENGL_RENDERER := true
